@@ -1,0 +1,99 @@
+---
+import RawLayout from '../layouts/RawLayout.astro';
+
+const bars = [38,44,41,52,57,54,63,70,66,74,78,83,80,88];
+const issues = [
+  ['Critical','12','Blocked indexable pages','4.8K impressions affected','danger'],
+  ['Error','37','Canonical conflicts','1.9K impressions affected','warning'],
+  ['Warning','84','Missing / weak titles','742 impressions affected','warning'],
+  ['Opportunity','26','High-impression low-CTR pages','+ potential clicks','info'],
+];
+---
+<RawLayout title="Website overview" description="What is broken, what changed, and where search visibility can grow." trace="SCR-Website Overview · DC-WEBSITE-SUMMARY · Issues + Search + Performance + AI summaries">
+  <div slot="actions" class="page-actions">
+    <button class="btn">Last 28 days ▾</button>
+    <button class="btn primary">Run crawl</button>
+  </div>
+
+  <section class="grid kpis">
+    <article class="card kpi">
+      <div class="kpi-label">Organic clicks <span class="badge success">GSC</span></div>
+      <div class="kpi-value num">18,426</div>
+      <div class="kpi-foot"><span class="delta up">+12.4%</span><span>vs previous 28 days</span></div>
+    </article>
+    <article class="card kpi">
+      <div class="kpi-label">Search impressions <span class="badge success">GSC</span></div>
+      <div class="kpi-value num">684K</div>
+      <div class="kpi-foot"><span class="delta up">+8.1%</span><span>coverage 97%</span></div>
+    </article>
+    <article class="card kpi">
+      <div class="kpi-label">Open issues <span class="badge danger">12 critical</span></div>
+      <div class="kpi-value num">159</div>
+      <div class="kpi-foot"><span class="delta down">+21 new</span><span>since last crawl</span></div>
+    </article>
+    <article class="card kpi">
+      <div class="kpi-label">AI citation rate <span class="badge info">Sample 120</span></div>
+      <div class="kpi-value num">18.3%</div>
+      <div class="kpi-foot"><span class="delta up">+3.1 pp</span><span>last 30 days</span></div>
+    </article>
+  </section>
+
+  <section class="grid two" style="margin-top:14px">
+    <article class="card">
+      <div class="card-header">
+        <div><h2>Search visibility trend</h2><p>Clicks and impressions normalized for visual comparison.</p></div>
+        <span class="badge">Daily</span>
+      </div>
+      <div class="card-body">
+        <div class="chart">
+          {bars.map((h, i) => <div class:list={["chart-bar", { primary: i > 8 }]} style={`height:${h}%`}></div>)}
+        </div>
+        <div class="chart-legend"><span class="legend-key"><i class="legend-swatch"></i> Current period</span><span class="legend-key"><i class="legend-swatch alt"></i> Previous period</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-header"><div><h2>Site health</h2><p>Current crawl · 2 hours ago</p></div><span class="badge warning">Partial 96%</span></div>
+      <div class="card-body">
+        <div class="meter-row"><span>Fetched</span><div class="progress success"><span style="width:96%"></span></div><strong>96%</strong></div>
+        <div class="meter-row"><span>Indexable</span><div class="progress"><span style="width:78%"></span></div><strong>78%</strong></div>
+        <div class="meter-row"><span>Valid canonical</span><div class="progress warning"><span style="width:91%"></span></div><strong>91%</strong></div>
+        <div class="meter-row"><span>CWV good</span><div class="progress warning"><span style="width:64%"></span></div><strong>64%</strong></div>
+        <div class="callout warning"><strong>Why partial?</strong> 184 URLs timed out and 23 were blocked by robots. Metrics below keep partial state visible instead of converting missing coverage to zero.</div>
+      </div>
+    </article>
+  </section>
+
+  <section class="grid two" style="margin-top:14px">
+    <article class="card">
+      <div class="card-header"><div><h2>Highest-priority issues</h2><p>Priority combines severity, exposure, visibility, business value and confidence.</p></div><a class="btn" href="/issues">View all issues</a></div>
+      <div class="issue-list">
+        {issues.map(([label,count,title,impact,tone]) => (
+          <div class="issue-row">
+            <div class:list={["severity", label.toLowerCase()]}></div>
+            <div><div class="cell-main">{title}</div><div class="cell-sub">{impact}</div></div>
+            <div><span class:list={["badge", tone]}>{label}</span></div>
+            <div><strong class="num">{count}</strong><div class="cell-sub">pages</div></div>
+            <div><strong>Priority {label === 'Critical' ? '92' : label === 'Error' ? '76' : '61'}</strong><div class="cell-sub">confidence high</div></div>
+          </div>
+        ))}
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-header"><div><h2>Growth opportunities</h2><p>Evidence-backed opportunities, not a generic SEO score.</p></div></div>
+      <div class="card-body list">
+        <div class="list-item"><div><div class="list-title">Improve CTR for “xe đạp thể thao” cluster</div><div class="list-meta">42.8K impressions · avg position 4.7 · CTR 1.8%</div></div><span class="badge info">High</span></div>
+        <div class="list-item"><div><div class="list-title">Consolidate competing category pages</div><div class="list-meta">3 URLs swap rankings across 18 queries</div></div><span class="badge warning">Review</span></div>
+        <div class="list-item"><div><div class="list-title">Add source-worthy facts to e-bike guide</div><div class="list-meta">AI citation gap vs 3 competitors · 24 prompt samples</div></div><span class="badge info">AI</span></div>
+        <div class="list-item"><div><div class="list-title">Fix orphaned high-value product pages</div><div class="list-meta">11 indexable URLs · 0 internal links in latest crawl</div></div><span class="badge danger">SEO</span></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="grid three" style="margin-top:14px">
+    <article class="card pad"><div class="kpi-label">Latest crawl</div><div class="kpi-value" style="font-size:20px">2h ago</div><div class="kpi-foot">8,412 URLs discovered · 8,075 fetched</div></article>
+    <article class="card pad"><div class="kpi-label">Top losing page</div><div class="cell-main" style="margin-top:10px">/xe-dap-dia-hinh/</div><div class="kpi-foot"><span class="delta down">−31.6%</span><span>clicks vs previous period</span></div></article>
+    <article class="card pad"><div class="kpi-label">Integration freshness</div><div class="kpi-value" style="font-size:20px">Healthy</div><div class="kpi-foot">GSC 12m · PSI 2h · Bing AI 1d</div></article>
+  </section>
+</RawLayout>
