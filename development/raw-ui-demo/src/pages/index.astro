@@ -1,3 +1,85 @@
 ---
-return Astro.redirect('/website-overview');
+import RawLayout from '../layouts/RawLayout.astro';
+
+const sites = [
+  { name:'xedap.vn', type:'E-commerce', clicks:'18.4K', trend:'+12.4%', issues:159, critical:12, crawl:'2h ago', health:'Partial', ai:'18.3%', tone:'warning' },
+  { name:'giant.vn', type:'Brand / Commerce', clicks:'9.8K', trend:'+4.8%', issues:64, critical:3, crawl:'48m ago', health:'Healthy', ai:'24.1%', tone:'success' },
+  { name:'active.vn', type:'Commerce', clicks:'7.3K', trend:'-8.6%', issues:91, critical:7, crawl:'6h ago', health:'Warning', ai:'12.7%', tone:'warning' },
+  { name:'xedien.vn', type:'E-commerce', clicks:'5.6K', trend:'+2.1%', issues:43, critical:1, crawl:'1h ago', health:'Healthy', ai:'16.9%', tone:'success' },
+  { name:'xedaptot.com', type:'Editorial / Commerce', clicks:'3.1K', trend:'-14.2%', issues:76, critical:9, crawl:'1d ago', health:'Stale', ai:'8.4%', tone:'danger' },
+];
 ---
+<RawLayout title="Workspace overview" eyebrow="All websites" description="Monitor search visibility, technical health, opportunities and validation work across every website in this workspace." trace="Multi-site workspace · website portfolio · cross-site attention queue">
+  <div slot="actions" class="page-actions">
+    <button class="btn">Last 28 days ▾</button>
+    <button class="btn">Export</button>
+    <button class="btn primary">+ Add website</button>
+  </div>
+
+  <section class="workspace-summary">
+    <article class="workspace-hero card pad">
+      <div class="panel-title"><div><h2>Portfolio attention</h2><span>What needs review across all websites</span></div><span class="badge danger">32 critical issues</span></div>
+      <div class="portfolio-alerts">
+        <a href="/website-overview" class="portfolio-alert"><span class="alert-index">01</span><div><strong>xedaptot.com lost 14.2% clicks</strong><p>Traffic decline is concentrated in category and guide pages.</p></div><span class="badge danger">Review</span></a>
+        <a href="/website-overview" class="portfolio-alert"><span class="alert-index">02</span><div><strong>xedap.vn has 12 critical issues</strong><p>Noindex regression and canonical conflicts affect high-impression pages.</p></div><span class="badge warning">Technical</span></a>
+        <a href="/website-overview" class="portfolio-alert"><span class="alert-index">03</span><div><strong>active.vn search demand is declining</strong><p>Clicks −8.6% while impressions remain nearly flat.</p></div><span class="badge info">Search</span></a>
+      </div>
+    </article>
+
+    <aside class="card pad portfolio-kpis">
+      <div class="panel-title"><h2>Workspace snapshot</h2><span>5 websites</span></div>
+      <div class="quick-stats">
+        <div class="quick-stat"><span>Total organic clicks</span><strong>44.2K</strong><small class="delta up">+1.8%</small></div>
+        <div class="quick-stat"><span>Open issues</span><strong>433</strong><small class="delta down">32 critical</small></div>
+        <div class="quick-stat"><span>Websites healthy</span><strong>2 / 5</strong><small>2 warning · 1 stale</small></div>
+        <div class="quick-stat"><span>Validation queue</span><strong>14</strong><small>4 overdue</small></div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="workspace-grid">
+    <article class="card pad">
+      <div class="panel-title"><div><h2>Search visibility across websites</h2><span>Organic clicks · last 28 days</span></div><span>GSC · synced 12m ago</span></div>
+      <div class="workspace-bars" aria-label="Organic clicks comparison">
+        {sites.map((site, i) => (
+          <div class="workspace-bar-row">
+            <span class="site-name">{site.name}</span>
+            <div class="workspace-track"><span style={`width:${[92,62,49,38,24][i]}%`}></span></div>
+            <strong>{site.clicks}</strong>
+            <span class:list={["trend-text", { down: site.trend.startsWith('-') }]}>{site.trend}</span>
+          </div>
+        ))}
+      </div>
+    </article>
+
+    <article class="card pad">
+      <div class="panel-title"><div><h2>Health distribution</h2><span>Crawl + indexability + integration freshness</span></div></div>
+      <div class="health-donut-wrap">
+        <div class="health-donut"><div><strong>5</strong><span>websites</span></div></div>
+        <div class="health-legend">
+          <div><i class="health-dot good"></i><span>Healthy</span><strong>2</strong></div>
+          <div><i class="health-dot warn"></i><span>Warning / partial</span><strong>2</strong></div>
+          <div><i class="health-dot bad"></i><span>Stale / failed</span><strong>1</strong></div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="card pad site-portfolio">
+    <div class="panel-title"><div><h2>Websites</h2><span>Manage and compare every connected property</span></div><div class="toolbar"><input class="input" placeholder="Search websites"/><select class="select"><option>All health states</option></select></div></div>
+    <div class="site-table">
+      <div class="site-row site-head-row"><div>Website</div><div>Organic clicks</div><div>Open issues</div><div>Latest crawl</div><div>AI citation</div><div>Health</div><div></div></div>
+      {sites.map((site) => (
+        <a class="site-row" href="/website-overview">
+          <div class="site-identity"><span class="site-favicon">{site.name.slice(0,1).toUpperCase()}</span><div><strong>{site.name}</strong><span>{site.type}</span></div></div>
+          <div><strong>{site.clicks}</strong><span class:list={["trend-text", { down: site.trend.startsWith('-') }]}>{site.trend}</span></div>
+          <div><strong>{site.issues}</strong><span>{site.critical} critical</span></div>
+          <div><strong>{site.crawl}</strong><span>Latest crawl</span></div>
+          <div><strong>{site.ai}</strong><span>Citation rate</span></div>
+          <div><span class:list={["badge", site.tone]}>{site.health}</span></div>
+          <div class="row-arrow">→</div>
+        </a>
+      ))}
+    </div>
+  </section>
+</RawLayout>
