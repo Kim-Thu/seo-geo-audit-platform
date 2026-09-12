@@ -1,0 +1,70 @@
+---
+import RawLayout from '../layouts/RawLayout.astro';
+---
+<RawLayout title="Page detail" eyebrow="https://xedap.vn/xe-dap-dia-hinh/" description="One place to inspect crawl, indexability, content, links, performance and search evidence for a URL." trace="SCR-Page Detail · DC-PAGE-DETAIL · Page ≠ PageSnapshot">
+  <div slot="actions"><button class="btn">Inspect URL</button><button class="btn primary">Re-crawl page</button></div>
+
+  <section class="grid kpis">
+    <article class="card kpi"><div class="kpi-label">Indexability</div><div class="kpi-value" style="font-size:20px">CONFLICT</div><div class="kpi-foot"><span class="badge danger">Canonical conflict</span></div></article>
+    <article class="card kpi"><div class="kpi-label">Organic clicks</div><div class="kpi-value">1,284</div><div class="kpi-foot"><span class="delta down">−31.6%</span><span>last 28 days</span></div></article>
+    <article class="card kpi"><div class="kpi-label">Impressions</div><div class="kpi-value">38.2K</div><div class="kpi-foot">CTR 3.36% · position 5.1</div></article>
+    <article class="card kpi"><div class="kpi-label">Open issues</div><div class="kpi-value">6</div><div class="kpi-foot">1 critical · 2 errors · 3 warnings</div></article>
+  </section>
+
+  <section class="grid two" style="margin-top:14px">
+    <div class="stack">
+      <article class="card">
+        <div class="card-header"><div><h2>Latest crawl snapshot</h2><p>Observed Sep 12, 2026 · 20:22 ICT</p></div><span class="badge warning">Rendered</span></div>
+        <div class="table-wrap"><table><tbody>
+          <tr><td class="cell-sub">HTTP status</td><td class="cell-main">200 OK</td></tr>
+          <tr><td class="cell-sub">Canonical</td><td><span class="cell-main">https://xedap.vn/xe-dap-mtb/</span><div class="cell-sub">Target redirects to /xe-dap-dia-hinh/ → conflict</div></td></tr>
+          <tr><td class="cell-sub">Meta robots</td><td class="cell-main">index, follow</td></tr>
+          <tr><td class="cell-sub">robots.txt</td><td class="cell-main">Allowed</td></tr>
+          <tr><td class="cell-sub">Title</td><td><span class="cell-main">Xe đạp địa hình chính hãng | Xedap.vn</span><div class="cell-sub">52 characters · unique in latest crawl</div></td></tr>
+          <tr><td class="cell-sub">Description</td><td><span class="cell-main">Khám phá xe đạp địa hình từ Giant, Fornix…</span><div class="cell-sub">148 characters · heuristic only</div></td></tr>
+          <tr><td class="cell-sub">H1</td><td class="cell-main">Xe đạp địa hình</td></tr>
+          <tr><td class="cell-sub">Content</td><td class="cell-main">1,824 words · 14 internal links · 22 product cards</td></tr>
+        </tbody></table></div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><div><h2>Detected issues</h2><p>Evidence is attached to the snapshot, not only to the current page.</p></div><a class="btn" href="/issues">View issue inventory</a></div>
+        <div class="issue-list">
+          <div class="issue-row"><div class="severity critical"></div><div><div class="cell-main">Canonical target redirects back to this URL</div><div class="cell-sub">SEO_CANONICAL_REDIRECT · observed in raw HTML and rendered DOM</div></div><div><span class="badge danger">Critical</span></div><div><strong>92</strong><div class="cell-sub">priority</div></div><div><span class="badge">Detected</span></div></div>
+          <div class="issue-row"><div class="severity warning"></div><div><div class="cell-main">Internal link depth increased</div><div class="cell-sub">From depth 2 → 4 compared with comparable crawl</div></div><div><span class="badge warning">Warning</span></div><div><strong>63</strong><div class="cell-sub">priority</div></div><div><span class="badge">Reviewed</span></div></div>
+          <div class="issue-row"><div class="severity opportunity"></div><div><div class="cell-main">CTR lower than nearby ranking peers</div><div class="cell-sub">High impressions at avg position 5.1; title/snippet review suggested</div></div><div><span class="badge info">Opportunity</span></div><div><strong>61</strong><div class="cell-sub">priority</div></div><div><span class="badge">Reviewed</span></div></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="stack">
+      <article class="card">
+        <div class="card-header"><div><h2>Core Web Vitals</h2><p>Field and lab measurements stay separate.</p></div><span class="badge warning">Needs improvement</span></div>
+        <div class="card-body">
+          <div class="meter-row"><span>LCP</span><div class="progress warning"><span style="width:72%"></span></div><strong>2.9s</strong></div>
+          <div class="meter-row"><span>INP</span><div class="progress success"><span style="width:88%"></span></div><strong>168ms</strong></div>
+          <div class="meter-row"><span>CLS</span><div class="progress success"><span style="width:91%"></span></div><strong>0.07</strong></div>
+          <div class="callout info"><strong>Field source:</strong> CrUX available. Lab Lighthouse captured 2h ago and is not merged into the field metric.</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><div><h2>Search demand</h2><p>Top queries for this exact landing page.</p></div></div>
+        <div class="card-body list">
+          <div class="list-item"><div><div class="list-title">xe đạp địa hình</div><div class="list-meta">12.6K impressions · pos 4.2</div></div><strong>438 clicks</strong></div>
+          <div class="list-item"><div><div class="list-title">xe đạp mtb</div><div class="list-meta">8.1K impressions · pos 5.8</div></div><strong>221 clicks</strong></div>
+          <div class="list-item"><div><div class="list-title">xe đạp leo núi</div><div class="list-meta">5.4K impressions · pos 6.3</div></div><strong>147 clicks</strong></div>
+        </div>
+      </article>
+
+      <article class="card pad">
+        <div class="kpi-label">Snapshot history</div>
+        <div class="list" style="margin-top:8px">
+          <div class="list-item"><div><div class="list-title">Sep 12 · current</div><div class="list-meta">Canonical conflict introduced</div></div><span class="badge danger">Changed</span></div>
+          <div class="list-item"><div><div class="list-title">Sep 10</div><div class="list-meta">Self canonical · 200 OK</div></div><span class="badge success">Healthy</span></div>
+          <div class="list-item"><div><div class="list-title">Sep 07</div><div class="list-meta">Self canonical · 200 OK</div></div><span class="badge success">Healthy</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+</RawLayout>
