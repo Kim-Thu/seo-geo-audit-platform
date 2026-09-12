@@ -1,0 +1,63 @@
+---
+import RawLayout from '../layouts/RawLayout.astro';
+const runs = [
+  ['Sep 12 · 20:04','Partial','8,412','8,075','184','23','31m 42s'],
+  ['Sep 10 · 08:11','Complete','8,377','8,355','0','22','29m 05s'],
+  ['Sep 07 · 19:32','Complete','8,291','8,270','0','21','28m 44s'],
+  ['Sep 04 · 07:50','Failed','4,122','1,064','2,891','167','11m 18s'],
+];
+---
+<RawLayout title="Crawl runs" description="Track acquisition coverage, crawl health and why a run is complete, partial or failed." trace="SCR-Crawl · DC-CRAWL-RUN · STATE partial/failed/stale">
+  <div slot="actions"><button class="btn">Crawl settings</button><button class="btn primary">Run crawl</button></div>
+
+  <section class="card">
+    <div class="card-header"><div><h2>Current run</h2><p>crawl_2026_09_12_2004 · started 31 minutes ago</p></div><span class="badge warning"><span class="dot"></span> Finalizing · Partial</span></div>
+    <div class="card-body stack">
+      <div class="stat-row">
+        <div class="stat-mini"><span>Discovered URLs</span><strong>8,412</strong></div>
+        <div class="stat-mini"><span>Fetched</span><strong>8,075</strong></div>
+        <div class="stat-mini"><span>Timed out</span><strong>184</strong></div>
+        <div class="stat-mini"><span>Robots blocked</span><strong>23</strong></div>
+      </div>
+      <div>
+        <div class="kpi-label"><span>Coverage</span><strong>96.0%</strong></div>
+        <div class="progress warning" style="margin-top:8px"><span style="width:96%"></span></div>
+      </div>
+      <div class="callout warning"><strong>Run will finish as PARTIAL.</strong> Useful observations exist, but 207 URLs were not fully acquired. Downstream issue counts and site summaries must retain this completeness state.</div>
+    </div>
+  </section>
+
+  <section class="grid three" style="margin-top:14px">
+    <article class="card pad"><div class="kpi-label">HTTP 2xx</div><div class="kpi-value">7,712</div><div class="kpi-foot">95.5% of fetched pages</div></article>
+    <article class="card pad"><div class="kpi-label">Redirects</div><div class="kpi-value">241</div><div class="kpi-foot">18 chains · 2 loops</div></article>
+    <article class="card pad"><div class="kpi-label">4xx / 5xx</div><div class="kpi-value">122</div><div class="kpi-foot"><span class="delta down">37 new</span><span>vs previous crawl</span></div></article>
+  </section>
+
+  <section class="grid two" style="margin-top:14px">
+    <article class="card">
+      <div class="card-header"><div><h2>Pipeline status</h2><p>Jobs are asynchronous and independently bounded.</p></div></div>
+      <div class="card-body list">
+        <div class="list-item"><div><div class="list-title">HTTP fetch</div><div class="list-meta">8,075 completed · 184 timeout</div></div><span class="badge success">Done</span></div>
+        <div class="list-item"><div><div class="list-title">Selective render</div><div class="list-meta">312 eligible · 298 completed · 14 failed</div></div><span class="badge warning">Partial</span></div>
+        <div class="list-item"><div><div class="list-title">Rule evaluation</div><div class="list-meta">7,983 / 8,075 snapshots evaluated</div></div><span class="badge info">Running</span></div>
+        <div class="list-item"><div><div class="list-title">Finalization</div><div class="list-meta">Waiting for 92 audit jobs</div></div><span class="badge">Queued</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-header"><div><h2>Acquisition diagnostics</h2><p>Reasons matter more than a single crawl percentage.</p></div></div>
+      <div class="card-body">
+        <div class="meter-row"><span>200 OK</span><div class="progress success"><span style="width:91%"></span></div><strong>7,712</strong></div>
+        <div class="meter-row"><span>3xx</span><div class="progress"><span style="width:17%"></span></div><strong>241</strong></div>
+        <div class="meter-row"><span>4xx</span><div class="progress warning"><span style="width:9%"></span></div><strong>91</strong></div>
+        <div class="meter-row"><span>5xx</span><div class="progress danger"><span style="width:4%"></span></div><strong>31</strong></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="card-header"><div><h2>Run history</h2><p>Compare only runs with compatible crawl configuration.</p></div></div>
+    <div class="table-wrap"><table><thead><tr><th>Started</th><th>Status</th><th class="right">Discovered</th><th class="right">Fetched</th><th class="right">Failed</th><th class="right">Robots</th><th>Duration</th></tr></thead><tbody>
+      {runs.map(([date,status,discovered,fetched,failed,robots,duration]) => <tr><td class="cell-main">{date}</td><td><span class:list={["badge", status==='Complete'?'success':status==='Partial'?'warning':'danger']}>{status}</span></td><td class="right num">{discovered}</td><td class="right num">{fetched}</td><td class="right num">{failed}</td><td class="right num">{robots}</td><td>{duration}</td></tr>)}
+    </tbody></table></div>
+  </section>
+</RawLayout>
