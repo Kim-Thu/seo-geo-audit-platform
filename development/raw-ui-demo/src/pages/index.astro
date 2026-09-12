@@ -1,0 +1,31 @@
+---
+import RawLayout from '../layouts/RawLayout.astro';
+
+const screens = [
+  ['Website Overview', '/website-overview', 'North-star operational summary'],
+  ['Crawl', '/crawl', 'Run progress, coverage, partial/failure states'],
+  ['Issues', '/issues', 'Severity, priority, affected pages, lifecycle'],
+  ['Page Detail', '/page-detail', 'Crawl/indexability/content/performance evidence'],
+  ['Search', '/search', 'Queries, landing pages, opportunities'],
+  ['GEO / AI', '/geo', 'Mentions, citations, coverage, competitors'],
+  ['Tasks', '/tasks', 'Remediation and validation loop'],
+];
+---
+<RawLayout title="Demo Index" trace="Issue #1 · BA → DA → UI/UX visual checkpoint">
+  <section class="raw-grid">
+    {screens.map(([name, href, note]) => (
+      <a class="raw-card raw-stack" href={href}>
+        <strong>{name}</strong>
+        <span class="raw-muted">{note}</span>
+      </a>
+    ))}
+  </section>
+
+  <section class="raw-card raw-stack">
+    <strong>Prototype rule</strong>
+    <p class="raw-muted">
+      Every demo screen should state which BA requirement, DA contract and UI/UX screen/flow/state it is validating.
+      Dummy values are allowed; invented business semantics are not.
+    </p>
+  </section>
+</RawLayout>
