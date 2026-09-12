@@ -4,33 +4,61 @@ import '../styles/global.css';
 
 interface Props {
   title: string;
+  eyebrow?: string;
+  description?: string;
   trace?: string;
 }
 
-const { title, trace = 'Trace BA / DA / UIUX IDs here' } = Astro.props;
+const {
+  title,
+  eyebrow = 'xedap.vn',
+  description = '',
+  trace = 'Trace: BA → DA → UI/UX',
+} = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
-    <title>{title} — Raw UI Sandbox</title>
+    <title>{title} — SearchOps Raw UI</title>
   </head>
   <body>
-    <div class="raw-shell">
-      <aside class="raw-sidebar"><DemoNav /></aside>
-      <main class="raw-main raw-stack">
-        <header>
-          <div class="raw-kicker">Visual validation only</div>
-          <h1 class="raw-title">{title}</h1>
-          <p class="raw-muted">{trace}</p>
+    <div class="app-shell">
+      <aside class="sidebar"><DemoNav /></aside>
+      <section class="app-column">
+        <header class="topbar">
+          <div class="breadcrumbs">
+            <span>Workspace</span><span>/</span><strong>{eyebrow}</strong>
+          </div>
+          <div class="top-actions">
+            <button class="icon-button" aria-label="Search">⌕</button>
+            <button class="icon-button" aria-label="Notifications">○</button>
+            <div class="avatar">KT</div>
+          </div>
         </header>
-        <div class="raw-note">
-          This sandbox checks hierarchy, density, states and flow. It is not production UI and must not invent product semantics.
-        </div>
-        <slot />
-      </main>
+
+        <main class="page-shell">
+          <header class="page-header">
+            <div>
+              <div class="page-eyebrow">{eyebrow}</div>
+              <h1>{title}</h1>
+              {description && <p>{description}</p>}
+            </div>
+            <div class="page-actions"><slot name="actions" /></div>
+          </header>
+
+          <div class="prototype-banner">
+            <strong>Raw visual prototype</strong>
+            <span>{trace}</span>
+            <span class="prototype-divider"></span>
+            <span>Dummy data follows product contracts; not production metrics.</span>
+          </div>
+
+          <slot />
+        </main>
+      </section>
     </div>
   </body>
 </html>
