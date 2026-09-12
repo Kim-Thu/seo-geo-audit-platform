@@ -1,99 +1,125 @@
 ---
 import RawLayout from '../layouts/RawLayout.astro';
 
-const bars = [38,44,41,52,57,54,63,70,66,74,78,83,80,88];
 const issues = [
-  ['Critical','12','Blocked indexable pages','4.8K impressions affected','danger'],
-  ['Error','37','Canonical conflicts','1.9K impressions affected','warning'],
-  ['Warning','84','Missing / weak titles','742 impressions affected','warning'],
-  ['Opportunity','26','High-impression low-CTR pages','+ potential clicks','info'],
+  { title: 'Blocked indexable pages', severity: 'Critical', pages: 12, exposure: '4.8K', priority: 92, tone: 'danger' },
+  { title: 'Canonical conflicts', severity: 'Error', pages: 37, exposure: '1.9K', priority: 76, tone: 'warning' },
+  { title: 'Missing / weak titles', severity: 'Warning', pages: 84, exposure: '742', priority: 61, tone: 'warning' },
+  { title: 'High-impression low-CTR pages', severity: 'Opportunity', pages: 26, exposure: '+ clicks', priority: 58, tone: 'info' },
 ];
 ---
-<RawLayout title="Website overview" description="What is broken, what changed, and where search visibility can grow." trace="SCR-Website Overview · DC-WEBSITE-SUMMARY · Issues + Search + Performance + AI summaries">
+<RawLayout title="Website overview" description="Search visibility, technical health and the work that needs attention now." trace="SCR-003 · Attention Queue · Change Digest · Opportunity Queue · Work Summary">
   <div slot="actions" class="page-actions">
     <button class="btn">Last 28 days ▾</button>
+    <button class="btn">Export</button>
     <button class="btn primary">Run crawl</button>
   </div>
 
-  <section class="grid kpis">
-    <article class="card kpi">
-      <div class="kpi-label">Organic clicks <span class="badge success">GSC</span></div>
-      <div class="kpi-value num">18,426</div>
-      <div class="kpi-foot"><span class="delta up">+12.4%</span><span>vs previous 28 days</span></div>
-    </article>
-    <article class="card kpi">
-      <div class="kpi-label">Search impressions <span class="badge success">GSC</span></div>
-      <div class="kpi-value num">684K</div>
-      <div class="kpi-foot"><span class="delta up">+8.1%</span><span>coverage 97%</span></div>
-    </article>
-    <article class="card kpi">
-      <div class="kpi-label">Open issues <span class="badge danger">12 critical</span></div>
-      <div class="kpi-value num">159</div>
-      <div class="kpi-foot"><span class="delta down">+21 new</span><span>since last crawl</span></div>
-    </article>
-    <article class="card kpi">
-      <div class="kpi-label">AI citation rate <span class="badge info">Sample 120</span></div>
-      <div class="kpi-value num">18.3%</div>
-      <div class="kpi-foot"><span class="delta up">+3.1 pp</span><span>last 30 days</span></div>
-    </article>
-  </section>
+  <div class="overview-topline">
+    <div class="statusline"><span class="dot" style="color:#68b98c"></span> Latest crawl 2h ago · GSC synced 12m ago · 96% crawl coverage</div>
+    <span class="badge info">Production · vi-VN</span>
+  </div>
 
-  <section class="grid two" style="margin-top:14px">
-    <article class="card">
-      <div class="card-header">
-        <div><h2>Search visibility trend</h2><p>Clicks and impressions normalized for visual comparison.</p></div>
-        <span class="badge">Daily</span>
-      </div>
-      <div class="card-body">
-        <div class="chart">
-          {bars.map((h, i) => <div class:list={["chart-bar", { primary: i > 8 }]} style={`height:${h}%`}></div>)}
+  <section class="hero-grid">
+    <article class="card attention-card">
+      <div class="attention-head">
+        <div>
+          <div class="attention-title">Needs attention now</div>
+          <div class="attention-sub">Prioritized by severity, search exposure, business value and confidence.</div>
         </div>
-        <div class="chart-legend"><span class="legend-key"><i class="legend-swatch"></i> Current period</span><span class="legend-key"><i class="legend-swatch alt"></i> Previous period</span></div>
+        <a class="btn" href="/issues">Review all issues</a>
+      </div>
+      <div class="attention-items">
+        <div class="attention-item">
+          <div class="index">01 · CRITICAL</div>
+          <strong>Noindex regression on revenue pages</strong>
+          <p>6 indexable pages changed to noindex after the latest crawl. ~18K impressions exposed.</p>
+          <div class="attention-link">Review affected pages →</div>
+        </div>
+        <div class="attention-item">
+          <div class="index">02 · DATA HEALTH</div>
+          <strong>Bing AI source is stale</strong>
+          <p>Last successful refresh was 31 hours ago. AI visibility trend may be incomplete.</p>
+          <div class="attention-link">Inspect integration →</div>
+        </div>
+        <div class="attention-item">
+          <div class="index">03 · VALIDATION</div>
+          <strong>4 fixes are waiting validation</strong>
+          <p>Oldest fix has been waiting 2 days. Re-crawl only the affected URLs.</p>
+          <div class="attention-link">Run targeted validation →</div>
+        </div>
       </div>
     </article>
 
-    <article class="card">
-      <div class="card-header"><div><h2>Site health</h2><p>Current crawl · 2 hours ago</p></div><span class="badge warning">Partial 96%</span></div>
-      <div class="card-body">
-        <div class="meter-row"><span>Fetched</span><div class="progress success"><span style="width:96%"></span></div><strong>96%</strong></div>
-        <div class="meter-row"><span>Indexable</span><div class="progress"><span style="width:78%"></span></div><strong>78%</strong></div>
-        <div class="meter-row"><span>Valid canonical</span><div class="progress warning"><span style="width:91%"></span></div><strong>91%</strong></div>
-        <div class="meter-row"><span>CWV good</span><div class="progress warning"><span style="width:64%"></span></div><strong>64%</strong></div>
-        <div class="callout warning"><strong>Why partial?</strong> 184 URLs timed out and 23 were blocked by robots. Metrics below keep partial state visible instead of converting missing coverage to zero.</div>
+    <aside class="card pad">
+      <div class="panel-title"><h2>Current snapshot</h2><span>vs previous 28 days</span></div>
+      <div class="quick-stats">
+        <div class="quick-stat"><span>Organic clicks</span><strong>18,426</strong><small class="delta up">+12.4%</small></div>
+        <div class="quick-stat"><span>Impressions</span><strong>684K</strong><small class="delta up">+8.1%</small></div>
+        <div class="quick-stat"><span>Open issues</span><strong>159</strong><small class="delta down">+21 new</small></div>
+        <div class="quick-stat"><span>AI citation rate</span><strong>18.3%</strong><small class="delta up">+3.1 pp</small></div>
       </div>
+    </aside>
+  </section>
+
+  <section class="section-grid">
+    <article class="card pad">
+      <div class="panel-title"><h2>Search visibility trend</h2><span>Daily · GSC</span></div>
+      <div class="sparkline" aria-label="Search visibility trend chart">
+        <svg viewBox="0 0 760 220" role="img" aria-label="Clicks trend rising over the last 28 days">
+          <defs>
+            <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7fb0f8" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#7fb0f8" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g stroke="#e9eef5" stroke-width="1">
+            <line x1="0" y1="45" x2="760" y2="45"/><line x1="0" y1="90" x2="760" y2="90"/><line x1="0" y1="135" x2="760" y2="135"/><line x1="0" y1="180" x2="760" y2="180"/>
+          </g>
+          <path d="M0,171 C45,165 68,150 102,153 C135,156 158,130 194,136 C229,142 252,113 288,120 C325,126 347,101 381,105 C420,110 443,81 480,90 C520,98 541,70 575,77 C614,84 640,57 676,64 C711,70 734,49 760,52 L760,220 L0,220 Z" fill="url(#area)"/>
+          <path d="M0,171 C45,165 68,150 102,153 C135,156 158,130 194,136 C229,142 252,113 288,120 C325,126 347,101 381,105 C420,110 443,81 480,90 C520,98 541,70 575,77 C614,84 640,57 676,64 C711,70 734,49 760,52" fill="none" stroke="#5f9cf5" stroke-width="3" stroke-linecap="round"/>
+          <path d="M0,183 C70,173 117,170 171,162 C226,154 278,153 337,141 C395,130 454,132 506,119 C565,105 625,109 681,94 C714,85 739,87 760,80" fill="none" stroke="#b9c9df" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 7"/>
+        </svg>
+      </div>
+      <div class="chart-legend"><span class="legend-key"><i class="legend-swatch"></i> Current period</span><span class="legend-key"><i class="legend-swatch alt"></i> Previous period</span></div>
+    </article>
+
+    <article class="card pad">
+      <div class="panel-title"><h2>Crawl & index health</h2><span class="badge warning">Partial 96%</span></div>
+      <div class="health-list">
+        <div class="health-row"><span>Fetched</span><div class="mini-track"><span style="width:96%"></span></div><strong>96%</strong></div>
+        <div class="health-row"><span>Indexable</span><div class="mini-track"><span style="width:78%"></span></div><strong>78%</strong></div>
+        <div class="health-row"><span>Canonical valid</span><div class="mini-track"><span style="width:91%"></span></div><strong>91%</strong></div>
+        <div class="health-row"><span>CWV good</span><div class="mini-track"><span style="width:64%"></span></div><strong>64%</strong></div>
+      </div>
+      <div class="callout warning" style="margin-top:14px"><strong>Coverage note:</strong> 184 URLs timed out and 23 were blocked by robots. Missing coverage stays visible instead of being converted to zero.</div>
     </article>
   </section>
 
-  <section class="grid two" style="margin-top:14px">
-    <article class="card">
-      <div class="card-header"><div><h2>Highest-priority issues</h2><p>Priority combines severity, exposure, visibility, business value and confidence.</p></div><a class="btn" href="/issues">View all issues</a></div>
-      <div class="issue-list">
-        {issues.map(([label,count,title,impact,tone]) => (
-          <div class="issue-row">
-            <div class:list={["severity", label.toLowerCase()]}></div>
-            <div><div class="cell-main">{title}</div><div class="cell-sub">{impact}</div></div>
-            <div><span class:list={["badge", tone]}>{label}</span></div>
-            <div><strong class="num">{count}</strong><div class="cell-sub">pages</div></div>
-            <div><strong>Priority {label === 'Critical' ? '92' : label === 'Error' ? '76' : '61'}</strong><div class="cell-sub">confidence high</div></div>
+  <section class="section-grid">
+    <article class="card pad">
+      <div class="panel-title"><h2>Priority work</h2><a href="/issues" class="badge info">Open issue inventory →</a></div>
+      <div class="soft-table">
+        <div class="soft-row header"><div>Issue</div><div>Pages</div><div>Exposure</div><div>Priority</div></div>
+        {issues.map((issue) => (
+          <div class="soft-row">
+            <div><strong>{issue.title}</strong><div class="cell-sub"><span class:list={["badge", issue.tone]}>{issue.severity}</span></div></div>
+            <div><strong>{issue.pages}</strong></div>
+            <div><strong>{issue.exposure}</strong><div class="cell-sub">impressions</div></div>
+            <div><strong>{issue.priority}</strong><div class="cell-sub">high confidence</div></div>
           </div>
         ))}
       </div>
     </article>
 
-    <article class="card">
-      <div class="card-header"><div><h2>Growth opportunities</h2><p>Evidence-backed opportunities, not a generic SEO score.</p></div></div>
-      <div class="card-body list">
-        <div class="list-item"><div><div class="list-title">Improve CTR for “xe đạp thể thao” cluster</div><div class="list-meta">42.8K impressions · avg position 4.7 · CTR 1.8%</div></div><span class="badge info">High</span></div>
+    <article class="card pad">
+      <div class="panel-title"><h2>Growth opportunities</h2><span>Evidence-backed</span></div>
+      <div class="list">
+        <div class="list-item"><div><div class="list-title">Improve CTR for “xe đạp thể thao”</div><div class="list-meta">42.8K impressions · avg position 4.7 · CTR 1.8%</div></div><span class="badge info">High</span></div>
         <div class="list-item"><div><div class="list-title">Consolidate competing category pages</div><div class="list-meta">3 URLs swap rankings across 18 queries</div></div><span class="badge warning">Review</span></div>
         <div class="list-item"><div><div class="list-title">Add source-worthy facts to e-bike guide</div><div class="list-meta">AI citation gap vs 3 competitors · 24 prompt samples</div></div><span class="badge info">AI</span></div>
         <div class="list-item"><div><div class="list-title">Fix orphaned high-value product pages</div><div class="list-meta">11 indexable URLs · 0 internal links in latest crawl</div></div><span class="badge danger">SEO</span></div>
       </div>
     </article>
-  </section>
-
-  <section class="grid three" style="margin-top:14px">
-    <article class="card pad"><div class="kpi-label">Latest crawl</div><div class="kpi-value" style="font-size:20px">2h ago</div><div class="kpi-foot">8,412 URLs discovered · 8,075 fetched</div></article>
-    <article class="card pad"><div class="kpi-label">Top losing page</div><div class="cell-main" style="margin-top:10px">/xe-dap-dia-hinh/</div><div class="kpi-foot"><span class="delta down">−31.6%</span><span>clicks vs previous period</span></div></article>
-    <article class="card pad"><div class="kpi-label">Integration freshness</div><div class="kpi-value" style="font-size:20px">Healthy</div><div class="kpi-foot">GSC 12m · PSI 2h · Bing AI 1d</div></article>
   </section>
 </RawLayout>
