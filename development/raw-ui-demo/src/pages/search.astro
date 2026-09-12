@@ -1,0 +1,24 @@
+---
+import RawLayout from '../layouts/RawLayout.astro';
+const queries = [
+  ['xe đạp thể thao','42.8K','774','1.81%','4.7','High CTR opportunity'],
+  ['xe đạp địa hình','38.2K','1,284','3.36%','5.1','Stable'],
+  ['xe đạp giant','29.1K','1,841','6.33%','2.8','Strong'],
+  ['xe đạp điện','18.4K','391','2.13%','7.4','Content gap'],
+  ['xe đạp trẻ em','11.6K','274','2.36%','6.2','Internal link opportunity'],
+];
+---
+<RawLayout title="Search performance" description="Connect query demand to landing pages and concrete optimization opportunities." trace="SCR-Search Performance · DC-SEARCH-PERFORMANCE · Query/Page grain preserved">
+  <div slot="actions"><button class="btn">Compare period</button><button class="btn">Export</button></div>
+  <section class="grid kpis">
+    <article class="card kpi"><div class="kpi-label">Clicks</div><div class="kpi-value">18.4K</div><div class="kpi-foot"><span class="delta up">+12.4%</span><span>vs previous period</span></div></article>
+    <article class="card kpi"><div class="kpi-label">Impressions</div><div class="kpi-value">684K</div><div class="kpi-foot"><span class="delta up">+8.1%</span><span>28 days</span></div></article>
+    <article class="card kpi"><div class="kpi-label">CTR</div><div class="kpi-value">2.69%</div><div class="kpi-foot">Calculated only when impressions &gt; 0</div></article>
+    <article class="card kpi"><div class="kpi-label">Avg position</div><div class="kpi-value">6.4</div><div class="kpi-foot">Source-native metric · aggregation caution</div></article>
+  </section>
+  <section class="grid two" style="margin-top:14px">
+    <article class="card"><div class="card-header"><div><h2>Query trend</h2><p>Daily clicks for selected query set.</p></div></div><div class="card-body"><div class="chart">{[44,51,47,58,62,55,67,64,72,76,73,81,79,87].map((h,i)=><div class:list={["chart-bar",{primary:i>7}]} style={`height:${h}%`}></div>)}</div></div></article>
+    <article class="card"><div class="card-header"><div><h2>Opportunity summary</h2><p>First-party evidence before recommendations.</p></div></div><div class="card-body list"><div class="list-item"><div><div class="list-title">Low CTR at strong positions</div><div class="list-meta">9 query-page pairs · 71K impressions</div></div><span class="badge info">High</span></div><div class="list-item"><div><div class="list-title">Ranking range 4–10</div><div class="list-meta">23 clusters with growing impressions</div></div><span class="badge info">23</span></div><div class="list-item"><div><div class="list-title">Cannibalization review</div><div class="list-meta">3 clusters show URL swapping</div></div><span class="badge warning">Review</span></div></div></article>
+  </section>
+  <section class="card" style="margin-top:14px"><div class="card-header"><div><h2>Queries</h2><p>Landing page mapping, intent and observed performance.</p></div><div class="toolbar"><input class="input" placeholder="Search query…" /><select class="select"><option>All intent</option></select></div></div><div class="table-wrap"><table><thead><tr><th>Query</th><th class="right">Impressions</th><th class="right">Clicks</th><th class="right">CTR</th><th class="right">Position</th><th>Opportunity</th></tr></thead><tbody>{queries.map(([q,imp,clicks,ctr,pos,opp])=><tr><td><div class="cell-main">{q}</div><div class="cell-sub">Landing: /xe-dap/</div></td><td class="right">{imp}</td><td class="right">{clicks}</td><td class="right">{ctr}</td><td class="right">{pos}</td><td><span class:list={["badge",opp==='Strong'?'success':opp==='Stable'?'dark':'info']}>{opp}</span></td></tr>)}</tbody></table></div></section>
+</RawLayout>
