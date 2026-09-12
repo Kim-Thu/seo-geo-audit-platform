@@ -1,20 +1,20 @@
 # Raw UI Demo Sandbox (Astro)
 
-This folder exists to turn BA → DA → UI/UX decisions into **fast visual checkpoints** before production implementation.
+This folder turns BA → DA → UI/UX decisions into **populated visual checkpoints** before production implementation.
 
 It is intentionally separate from the future `apps/web` Next.js application.
 
 ## Purpose
 
-Use this sandbox to answer visual questions early:
-- Is information hierarchy clear?
-- Is the dashboard too dense or too empty?
-- Can users scan issue severity/priority/evidence quickly?
-- Are UNKNOWN / PARTIAL / FAILED / STALE states understandable?
-- Does the issue → task → validation loop make sense when rendered as screens?
-- Do Website Overview, Crawl, Issues, Search and GEO feel like one product?
+This is not a blank wireframe gallery. Every route should look close enough to a real operational product that we can judge:
+- information hierarchy;
+- data density;
+- scanability;
+- relationship between summary → evidence → action;
+- clarity of partial / stale / failed states;
+- whether BA/DA/UIUX assumptions still make sense after real content is placed on screen.
 
-Do **not** use it to redefine product semantics.
+A useful prototype may expose that the existing UI/UX specification is wrong or incomplete. That is expected. Record the finding and correct the upstream spec before production implementation.
 
 ## Run locally
 
@@ -24,20 +24,16 @@ npm install
 npm run dev
 ```
 
-Then open the local Astro URL shown in the terminal.
+## Current populated routes
 
-## Current routes
-
-- `/` — demo index
-- `/website-overview`
-- `/crawl`
-- `/issues`
-- `/page-detail`
-- `/search`
-- `/geo`
-- `/tasks`
-
-The current routes are intentionally raw placeholders. Replace each route with the specific layout being discussed.
+- `/` — visual validation workspace
+- `/website-overview` — north-star operational dashboard
+- `/crawl` — crawl progress, history and partial/failure diagnostics
+- `/issues` — issue inventory with severity, priority and lifecycle
+- `/page-detail` — URL snapshot, indexability, issues, CWV and search evidence
+- `/search` — query performance and opportunities
+- `/geo` — AI mentions, citations, source gaps and run observations
+- `/tasks` — remediation queue and evidence-driven validation
 
 ## Traceability rule
 
@@ -49,44 +45,48 @@ DA: entity / metric / DC-* contract
 UIUX: FLOW-* / SCR-* / STATE-* / CMP-*
 ```
 
-Example:
-
-```text
-BA: UC-003 Review SEO Issue
-DA: DC-ISSUE-LIST / DC-ISSUE-DETAIL
-UIUX: SCR-IssueList / SCR-IssueDetail / STATE-PARTIAL
-```
-
-Dummy data is allowed, but field names, lifecycle states and metric meanings must come from approved artefacts.
+Dummy data is allowed and encouraged for visual validation, but lifecycle states and metric meanings must match the approved/active contracts.
 
 ## Prototype rules
 
 1. This is visual validation, not production implementation.
-2. Do not add real authentication, database, queue, crawler or provider integration here.
-3. Do not create a generic SEO/GEO score.
-4. Keep `0`, `NULL`, `UNKNOWN`, `PARTIAL`, `FAILED` and `STALE` semantically distinct.
-5. `Task Done` does not mean `Issue Closed`; validation evidence still controls closure.
-6. AI mention and AI citation are separate observations.
-7. If a prototype reveals a semantic gap, update BA/DA/UIUX through change control before production code.
-8. Visual-only changes can later inform `DEV-IMP-*` implementation without changing upstream semantics.
+2. Populate screens with realistic content; blank boxes are not sufficient validation.
+3. Do not add real authentication, database, queue, crawler or provider integration here.
+4. Do not create a generic SEO/GEO score.
+5. Keep `0`, `NULL`, `UNKNOWN`, `PARTIAL`, `FAILED` and `STALE` semantically distinct.
+6. `Task Done` does not mean `Issue Closed`; validation evidence still controls closure.
+7. AI mention and AI citation are separate observations.
+8. If the populated layout exposes a semantic or flow gap, amend BA/DA/UIUX through change control.
+9. If the problem is visual-only, update this prototype first and later carry the accepted pattern into `DEV-IMP-*`.
+10. Do not mark production implementation tasks Done because a raw Astro screen exists.
 
-## Suggested iteration method
+## Review questions per screen
 
-For each screen discussion:
+- In 5–10 seconds, can the user tell what needs attention?
+- Is the primary action obvious without hiding evidence?
+- Are KPIs source/freshness/completeness aware where required?
+- Does the screen distinguish fact, derived metric, heuristic and recommendation?
+- Can the user drill from summary to evidence without losing context?
+- Are tables readable at realistic row/column density?
+- Are partial/error/empty states understandable?
+- Does the screen still work when values are long, zero, null or unavailable?
+- Does mobile/responsive behavior preserve priority order rather than simply stacking everything?
+
+## Iteration method
 
 ```text
-1. Identify upstream BA/DA/UIUX IDs.
-2. Copy the closest raw route or component.
-3. Add realistic dummy data matching the contract.
-4. Test desktop + mobile information hierarchy.
-5. Compare alternatives if needed.
-6. Record findings in the related GitHub issue/comment.
-7. If semantics changed, return to change control.
-8. If visual direction is accepted, carry it into production implementation later.
+1. Pick an upstream workflow/screen.
+2. Load realistic dummy content shaped like the data contract.
+3. Render a complete operational screen, not a skeleton.
+4. Review hierarchy, density, actions, states and drill-down path.
+5. Record visual issues separately from semantic issues.
+6. Fix visual-only problems in Astro.
+7. For semantic gaps, update the relevant UI/UX/DA/BA artefact through change control.
+8. Only accepted patterns move into future production implementation.
 ```
 
 ## GitHub tracking
 
-Primary setup issue: #1 — `[DEV-RAW] Astro raw UI demo sandbox for BA/DA/UIUX visual validation`.
+Primary issue: #1 — `[DEV-RAW] Astro raw UI demo sandbox for BA/DA/UIUX visual validation`.
 
-The project Work Tracker should keep sandbox bootstrap and ongoing visual checkpoints separate from production `DEV-IMP-*` progress.
+Project Control tracks bootstrap, populated visual checkpoints and upstream UI/UX correction separately from production `DEV-IMP-*` progress.
