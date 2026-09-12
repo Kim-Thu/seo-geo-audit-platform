@@ -1,0 +1,21 @@
+---
+const items = [
+  { href: '/', label: 'Demo Index' },
+  { href: '/website-overview', label: 'Website Overview' },
+  { href: '/crawl', label: 'Crawl' },
+  { href: '/issues', label: 'Issues' },
+  { href: '/page-detail', label: 'Page Detail' },
+  { href: '/search', label: 'Search' },
+  { href: '/geo', label: 'GEO / AI' },
+  { href: '/tasks', label: 'Tasks' },
+];
+---
+<nav aria-label="Raw UI demo screens" class="raw-stack">
+  <div>
+    <div class="raw-kicker">SEO GEO Audit</div>
+    <strong>Raw UI Sandbox</strong>
+  </div>
+  {items.map((item) => (
+    <a href={item.href}>{item.label}</a>
+  ))}
+</nav>
