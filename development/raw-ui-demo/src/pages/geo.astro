@@ -1,0 +1,36 @@
+---
+import RawLayout from '../layouts/RawLayout.astro';
+const prompts = [
+  ['best mountain bikes in vietnam','ChatGPT','Mentioned + cited','https://xedap.vn/...','Sep 12 20:14'],
+  ['xe dap giant cho nguoi moi','Bing Copilot','Mentioned','—','Sep 12 19:55'],
+  ['best bike shops ho chi minh city','Google AI Mode','Not mentioned','Competitor cited','Sep 12 18:48'],
+  ['xe dap dien nen mua 2026','ChatGPT','Mentioned + cited','/xe-dap-dien/','Sep 12 18:11'],
+];
+---
+<RawLayout title="AI visibility" description="Monitor mentions, citations and source gaps without pretending AI answers are deterministic rankings." trace="SCR-AI Visibility · DC-AI-VISIBILITY · AIQuery ≠ AIRun · mention ≠ citation">
+  <div slot="actions"><button class="btn">Prompt set ▾</button><button class="btn primary">Run sample</button></div>
+
+  <section class="grid kpis">
+    <article class="card kpi"><div class="kpi-label">Mention rate <span class="badge info">n=120</span></div><div class="kpi-value">41.7%</div><div class="kpi-foot"><span class="delta up">+4.2 pp</span><span>30-day sample</span></div></article>
+    <article class="card kpi"><div class="kpi-label">Citation rate <span class="badge info">n=120</span></div><div class="kpi-value">18.3%</div><div class="kpi-foot"><span class="delta up">+3.1 pp</span><span>brand prompts</span></div></article>
+    <article class="card kpi"><div class="kpi-label">URL coverage</div><div class="kpi-value">14.8%</div><div class="kpi-foot">12 cited URLs / 81 eligible URLs</div></article>
+    <article class="card kpi"><div class="kpi-label">Competitor share</div><div class="kpi-value">37.5%</div><div class="kpi-foot">Across same prompt sample</div></article>
+  </section>
+
+  <section class="grid two" style="margin-top:14px">
+    <article class="card"><div class="card-header"><div><h2>Visibility by topic</h2><p>Prompt-set based observations with explicit sample size.</p></div></div><div class="card-body">
+      <div class="meter-row"><span>Mountain bikes</span><div class="progress success"><span style="width:58%"></span></div><strong>58%</strong></div>
+      <div class="meter-row"><span>City bikes</span><div class="progress"><span style="width:42%"></span></div><strong>42%</strong></div>
+      <div class="meter-row"><span>E-bikes</span><div class="progress warning"><span style="width:31%"></span></div><strong>31%</strong></div>
+      <div class="meter-row"><span>Buying guides</span><div class="progress danger"><span style="width:19%"></span></div><strong>19%</strong></div>
+      <div class="callout info"><strong>Interpretation:</strong> percentages represent this configured prompt sample and engine mix, not an internet-wide rank.</div>
+    </div></article>
+    <article class="card"><div class="card-header"><div><h2>Source gap</h2><p>Where competitors are cited and this site is not.</p></div></div><div class="card-body list">
+      <div class="list-item"><div><div class="list-title">Maintenance guides</div><div class="list-meta">Competitors cited in 17/24 prompts · xedap.vn 3/24</div></div><span class="badge danger">Gap</span></div>
+      <div class="list-item"><div><div class="list-title">Bike sizing</div><div class="list-meta">Competitors 11/18 · xedap.vn 5/18</div></div><span class="badge warning">Gap</span></div>
+      <div class="list-item"><div><div class="list-title">Brand/product facts</div><div class="list-meta">xedap.vn leads citations in 9/14 prompts</div></div><span class="badge success">Strong</span></div>
+    </div></article>
+  </section>
+
+  <section class="card" style="margin-top:14px"><div class="card-header"><div><h2>Recent AI runs</h2><p>Each execution is stored separately; stochastic results are not overwritten.</p></div></div><div class="table-wrap"><table><thead><tr><th>Prompt</th><th>Engine</th><th>Observation</th><th>Citation</th><th>Run time</th></tr></thead><tbody>{prompts.map(([prompt,engine,state,cite,time])=><tr><td><div class="cell-main">{prompt}</div><div class="cell-sub">locale vi-VN · prompt v3</div></td><td>{engine}</td><td><span class:list={["badge",state.includes('cited')?'success':state==='Mentioned'?'info':'danger']}>{state}</span></td><td class="cell-sub">{cite}</td><td>{time}</td></tr>)}</tbody></table></div></section>
+</RawLayout>
