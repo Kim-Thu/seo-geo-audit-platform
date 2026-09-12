@@ -4,28 +4,27 @@ const groups = [
   {
     label: 'Workspace',
     items: [
-      { href: '/', label: 'Demo home', icon: '⌂' },
-      { href: '/website-overview', label: 'Overview', icon: '◫' },
+      { href: '/website-overview', label: 'Overview', icon: 'overview' },
     ],
   },
   {
     label: 'Site intelligence',
     items: [
-      { href: '/crawl', label: 'Crawl runs', icon: '↻' },
-      { href: '/issues', label: 'Issues', icon: '!' },
-      { href: '/page-detail', label: 'Pages', icon: '▤' },
+      { href: '/crawl', label: 'Crawls', icon: 'crawl' },
+      { href: '/issues', label: 'Issues', icon: 'issue' },
+      { href: '/page-detail', label: 'Pages', icon: 'page' },
     ],
   },
   {
     label: 'Visibility',
     items: [
-      { href: '/search', label: 'Search performance', icon: '⌁' },
-      { href: '/geo', label: 'AI visibility', icon: '✦' },
+      { href: '/search', label: 'Search', icon: 'search' },
+      { href: '/geo', label: 'AI visibility', icon: 'ai' },
     ],
   },
   {
     label: 'Operations',
-    items: [{ href: '/tasks', label: 'Tasks & validation', icon: '✓' }],
+    items: [{ href: '/tasks', label: 'Tasks', icon: 'task' }],
   },
 ];
 ---
@@ -37,7 +36,7 @@ const groups = [
   </div>
 </div>
 
-<div class="site-switcher">
+<div class="site-switcher" title="xedap.vn · Production · vi-VN">
   <div class="site-dot"></div>
   <div class="site-copy">
     <strong>xedap.vn</strong>
@@ -51,10 +50,18 @@ const groups = [
     <section class="nav-group">
       <div class="nav-label">{group.label}</div>
       {group.items.map((item) => {
-        const active = pathname === item.href;
+        const active = pathname === item.href || (pathname === '/' && item.href === '/website-overview');
         return (
           <a class:list={["nav-item", { active }]} href={item.href}>
-            <span class="nav-icon">{item.icon}</span>
+            <span class="nav-icon" aria-hidden="true">
+              {item.icon === 'overview' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>}
+              {item.icon === 'crawl' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 7h-6V1"/><path d="M20 7a9 9 0 1 0 1 8"/></svg>}
+              {item.icon === 'issue' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10.3 3.9 2.6 18a2 2 0 0 0 1.8 3h15.2a2 2 0 0 0 1.8-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>}
+              {item.icon === 'page' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>}
+              {item.icon === 'search' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 18V9"/><path d="M10 18V5"/><path d="M16 18v-7"/><path d="M22 18V3"/></svg>}
+              {item.icon === 'ai' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 3 1.7 4.3L18 9l-4.3 1.7L12 15l-1.7-4.3L6 9l4.3-1.7L12 3Z"/><path d="m19 14 .9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9L19 14Z"/></svg>}
+              {item.icon === 'task' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 2 2 4-4"/><path d="M8 15h8"/></svg>}
+            </span>
             <span>{item.label}</span>
           </a>
         );
@@ -62,8 +69,3 @@ const groups = [
     </section>
   ))}
 </nav>
-
-<div class="sidebar-foot">
-  <div class="mini-status"><span></span> Data updated 12m ago</div>
-  <a href="https://github.com/Kim-Thu/seo-geo-audit-platform/issues/1">Prototype issue #1</a>
-</div>
