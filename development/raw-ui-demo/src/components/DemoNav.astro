@@ -1,21 +1,69 @@
 ---
-const items = [
-  { href: '/', label: 'Demo Index' },
-  { href: '/website-overview', label: 'Website Overview' },
-  { href: '/crawl', label: 'Crawl' },
-  { href: '/issues', label: 'Issues' },
-  { href: '/page-detail', label: 'Page Detail' },
-  { href: '/search', label: 'Search' },
-  { href: '/geo', label: 'GEO / AI' },
-  { href: '/tasks', label: 'Tasks' },
+const pathname = Astro.url.pathname;
+const groups = [
+  {
+    label: 'Workspace',
+    items: [
+      { href: '/', label: 'Demo home', icon: '⌂' },
+      { href: '/website-overview', label: 'Overview', icon: '◫' },
+    ],
+  },
+  {
+    label: 'Site intelligence',
+    items: [
+      { href: '/crawl', label: 'Crawl runs', icon: '↻' },
+      { href: '/issues', label: 'Issues', icon: '!' },
+      { href: '/page-detail', label: 'Pages', icon: '▤' },
+    ],
+  },
+  {
+    label: 'Visibility',
+    items: [
+      { href: '/search', label: 'Search performance', icon: '⌁' },
+      { href: '/geo', label: 'AI visibility', icon: '✦' },
+    ],
+  },
+  {
+    label: 'Operations',
+    items: [{ href: '/tasks', label: 'Tasks & validation', icon: '✓' }],
+  },
 ];
 ---
-<nav aria-label="Raw UI demo screens" class="raw-stack">
+<div class="side-head">
+  <div class="brand-mark">SG</div>
   <div>
-    <div class="raw-kicker">SEO GEO Audit</div>
-    <strong>Raw UI Sandbox</strong>
+    <strong>SearchOps</strong>
+    <span>Raw product demo</span>
   </div>
-  {items.map((item) => (
-    <a href={item.href}>{item.label}</a>
+</div>
+
+<div class="site-switcher">
+  <div class="site-dot"></div>
+  <div class="site-copy">
+    <strong>xedap.vn</strong>
+    <span>Production · vi-VN</span>
+  </div>
+  <span class="chevron">⌄</span>
+</div>
+
+<nav aria-label="Product demo navigation" class="nav-groups">
+  {groups.map((group) => (
+    <section class="nav-group">
+      <div class="nav-label">{group.label}</div>
+      {group.items.map((item) => {
+        const active = pathname === item.href;
+        return (
+          <a class:list={["nav-item", { active }]} href={item.href}>
+            <span class="nav-icon">{item.icon}</span>
+            <span>{item.label}</span>
+          </a>
+        );
+      })}
+    </section>
   ))}
 </nav>
+
+<div class="sidebar-foot">
+  <div class="mini-status"><span></span> Data updated 12m ago</div>
+  <a href="https://github.com/Kim-Thu/seo-geo-audit-platform/issues/1">Prototype issue #1</a>
+</div>
