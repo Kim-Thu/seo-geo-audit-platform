@@ -1,0 +1,21 @@
+---
+import RawLayout from '../layouts/RawLayout.astro';
+const tasks = [
+  ['Fix canonical loop on MTB category','P0','In Progress','SEO_CANONICAL_REDIRECT','Frontend','Sep 13'],
+  ['Resolve robots conflict on filtered URLs','P0','Review','SEO_ROBOTS_BLOCK_INDEXABLE','Backend','Sep 13'],
+  ['Rewrite title cluster for sport bikes','P1','Planned','SEARCH_LOW_CTR_OPPORTUNITY','SEO','Sep 15'],
+  ['Add internal links to orphan products','P1','In Progress','SEO_ORPHAN_PAGE','Content','Sep 16'],
+  ['Validate fixed broken links','P2','Validation','SEO_INTERNAL_BROKEN_LINK','QA','Sep 12'],
+];
+---
+<RawLayout title="Tasks & validation" description="Convert evidence into work, then close issues only after fresh validation confirms the fix." trace="SCR-Tasks · DC-TASK-SOURCE · Issue → Task → Fix → Validation → Closed/Reopened">
+  <div slot="actions"><button class="btn">Assignee ▾</button><button class="btn primary">Create task</button></div>
+  <section class="grid kpis">
+    <article class="card kpi"><div class="kpi-label">Open tasks</div><div class="kpi-value">18</div><div class="kpi-foot">6 in progress · 5 planned</div></article>
+    <article class="card kpi"><div class="kpi-label">Waiting validation</div><div class="kpi-value">4</div><div class="kpi-foot">Fresh evidence required</div></article>
+    <article class="card kpi"><div class="kpi-label">Validated this week</div><div class="kpi-value">11</div><div class="kpi-foot"><span class="delta up">8 closed</span><span>3 reopened</span></div></article>
+    <article class="card kpi"><div class="kpi-label">Overdue</div><div class="kpi-value">3</div><div class="kpi-foot"><span class="delta down">1 critical</span></div></article>
+  </section>
+  <section class="card" style="margin-top:14px"><div class="card-header"><div><h2>Remediation queue</h2><p>Tasks retain their source issue/opportunity and validation requirement.</p></div><div class="toolbar"><input class="input" placeholder="Search task…" /><select class="select"><option>All status</option></select></div></div><div class="table-wrap"><table><thead><tr><th>Task</th><th>Priority</th><th>Status</th><th>Source</th><th>Owner</th><th>Due</th></tr></thead><tbody>{tasks.map(([task,priority,status,source,owner,due])=><tr><td><div class="cell-main">{task}</div><div class="cell-sub">Created from evidence-backed issue</div></td><td><span class:list={["badge",priority==='P0'?'danger':priority==='P1'?'warning':'dark']}>{priority}</span></td><td><span class:list={["badge",status==='Validation'?'info':status==='In Progress'?'success':'dark']}>{status}</span></td><td class="cell-sub">{source}</td><td>{owner}</td><td>{due}</td></tr>)}</tbody></table></div></section>
+  <section class="grid two" style="margin-top:14px"><article class="card pad"><div class="kpi-label">Validation rule</div><div class="callout warning" style="margin-top:10px"><strong>Task Done is not Issue Closed.</strong> Completing implementation only moves the remediation toward validation. A targeted crawl/import must produce fresh evidence before the linked issue can close.</div></article><article class="card pad"><div class="kpi-label">Recent validation</div><div class="list" style="margin-top:8px"><div class="list-item"><div><div class="list-title">Broken links on /blog/</div><div class="list-meta">Fresh crawl found 0 matching broken-link findings</div></div><span class="badge success">Closed</span></div><div class="list-item"><div><div class="list-title">Missing title on product pages</div><div class="list-meta">3 of 18 URLs still missing title</div></div><span class="badge danger">Reopened</span></div></div></article></section>
+</RawLayout>
