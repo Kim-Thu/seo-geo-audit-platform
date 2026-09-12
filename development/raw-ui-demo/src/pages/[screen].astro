@@ -1,0 +1,40 @@
+---
+import RawLayout from '../layouts/RawLayout.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { screen: 'website-overview' }, props: { title: 'Website Overview', trace: 'Trace: BA north-star questions · DA website summary · UIUX overview screen' } },
+    { params: { screen: 'crawl' }, props: { title: 'Crawl', trace: 'Trace: crawl lifecycle · CrawlRun/PageSnapshot · crawl progress states' } },
+    { params: { screen: 'issues' }, props: { title: 'SEO Issues', trace: 'Trace: issue lifecycle · DC-ISSUE-LIST · issue list/filter states' } },
+    { params: { screen: 'page-detail' }, props: { title: 'Page Detail', trace: 'Trace: Page/PageSnapshot · DC-PAGE-DETAIL · evidence groups' } },
+    { params: { screen: 'search' }, props: { title: 'Search Performance', trace: 'Trace: query/page opportunity · DC-SEARCH-PERFORMANCE' } },
+    { params: { screen: 'geo' }, props: { title: 'GEO / AI Visibility', trace: 'Trace: AIRun/AICitation/AIEntityMention · DC-AI-VISIBILITY' } },
+    { params: { screen: 'tasks' }, props: { title: 'Remediation Tasks', trace: 'Trace: Issue → Task → Validation → Closed/Reopened' } },
+  ];
+}
+
+const { title, trace } = Astro.props;
+---
+<RawLayout title={title} trace={trace}>
+  <section class="raw-grid">
+    <div class="raw-card"><div class="raw-kicker">Metric / state</div><strong>Primary signal</strong><p class="raw-muted">Dummy value — replace from approved data contract.</p></div>
+    <div class="raw-card"><div class="raw-kicker">Metric / state</div><strong>Secondary signal</strong><p class="raw-muted">Keep NULL / UNKNOWN / PARTIAL distinct.</p></div>
+    <div class="raw-card"><div class="raw-kicker">Opportunity</div><strong>Growth signal</strong><p class="raw-muted">Do not invent a generic SEO/GEO score.</p></div>
+    <div class="raw-card"><div class="raw-kicker">Action</div><strong>Next action</strong><p class="raw-muted">Data → issue/opportunity → recommendation → task.</p></div>
+  </section>
+
+  <section class="raw-card raw-stack">
+    <div>
+      <div class="raw-kicker">Raw content region</div>
+      <strong>Use this area to test information hierarchy and density</strong>
+    </div>
+    <table class="raw-table">
+      <thead><tr><th>Item</th><th>State</th><th>Evidence</th><th>Next action</th></tr></thead>
+      <tbody>
+        <tr><td>Example A</td><td><span class="raw-badge">UNKNOWN</span></td><td>Source not available</td><td>Connect / inspect source</td></tr>
+        <tr><td>Example B</td><td><span class="raw-badge">PARTIAL</span></td><td>Some observations available</td><td>Review coverage</td></tr>
+        <tr><td>Example C</td><td><span class="raw-badge">ACTIONABLE</span></td><td>Rule/data evidence</td><td>Create remediation task</td></tr>
+      </tbody>
+    </table>
+  </section>
+</RawLayout>
