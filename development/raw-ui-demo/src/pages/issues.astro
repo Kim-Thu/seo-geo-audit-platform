@@ -1,0 +1,67 @@
+---
+import RawLayout from '../layouts/RawLayout.astro';
+const rows = [
+  ['Critical','Blocked indexable pages','SEO_ROBOTS_BLOCK_INDEXABLE','12','92','4.8K','Detected'],
+  ['Error','Canonical points to redirected URL','SEO_CANONICAL_REDIRECT','37','76','1.9K','Detected'],
+  ['Warning','Title missing or empty','SEO_TITLE_MISSING','18','68','742','Reviewed'],
+  ['Warning','Internal links point to 404 URLs','SEO_INTERNAL_BROKEN_LINK','23','63','611','Planned'],
+  ['Opportunity','High impressions, low CTR','SEARCH_LOW_CTR_OPPORTUNITY','26','61','42.8K','Reviewed'],
+  ['Opportunity','Orphaned indexable pages','SEO_ORPHAN_PAGE','11','58','386','Detected'],
+];
+---
+<RawLayout title="Issues" description="Find problems by severity, business exposure and evidence — then move them into remediation." trace="SCR-Issue List · DC-ISSUE-LIST · Issue lifecycle + priority components">
+  <div slot="actions"><button class="btn">Export</button></div>
+
+  <section class="grid kpis">
+    <article class="card kpi"><div class="kpi-label">Open issues</div><div class="kpi-value">159</div><div class="kpi-foot">Across 1,842 affected URLs</div></article>
+    <article class="card kpi"><div class="kpi-label">Critical</div><div class="kpi-value">12</div><div class="kpi-foot"><span class="delta down">+4</span><span>since last crawl</span></div></article>
+    <article class="card kpi"><div class="kpi-label">New this crawl</div><div class="kpi-value">21</div><div class="kpi-foot">136 persisted · 17 resolved</div></article>
+    <article class="card kpi"><div class="kpi-label">Waiting validation</div><div class="kpi-value">9</div><div class="kpi-foot">Task done ≠ issue closed</div></article>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="card-header">
+      <div><h2>Issue inventory</h2><p>Showing durable issues with latest observation evidence.</p></div>
+      <div class="toolbar"><input class="input" placeholder="Search rule, issue, URL…" /><select class="select"><option>All severity</option></select><select class="select"><option>All status</option></select></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Severity</th><th>Issue</th><th>Rule</th><th class="right">Pages</th><th class="right">Priority</th><th class="right">Impressions</th><th>Status</th></tr></thead>
+        <tbody>
+          {rows.map(([severity,title,rule,pages,priority,impressions,status]) => (
+            <tr>
+              <td><span class:list={["badge", severity === 'Critical' ? 'danger' : severity === 'Error' ? 'warning' : severity === 'Opportunity' ? 'info' : 'dark']}>{severity}</span></td>
+              <td><a class="cell-main" href="/page-detail">{title}</a><div class="cell-sub">Latest observation 2h ago · confidence high</div></td>
+              <td><span class="cell-sub">{rule}</span></td>
+              <td class="right num">{pages}</td>
+              <td class="right"><strong>{priority}</strong></td>
+              <td class="right num">{impressions}</td>
+              <td><span class="badge">{status}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="grid two" style="margin-top:14px">
+    <article class="card pad">
+      <div class="kpi-label">Priority is explainable</div>
+      <div class="stat-row" style="margin-top:12px">
+        <div class="stat-mini"><span>Severity</span><strong>1.00</strong></div>
+        <div class="stat-mini"><span>Exposure</span><strong>0.88</strong></div>
+        <div class="stat-mini"><span>Visibility</span><strong>0.91</strong></div>
+        <div class="stat-mini"><span>Confidence</span><strong>0.96</strong></div>
+      </div>
+      <div class="callout info" style="margin-top:12px"><strong>No black-box SEO score.</strong> A user can inspect why an issue received a high priority before creating work from it.</div>
+    </article>
+    <article class="card pad">
+      <div class="kpi-label">Lifecycle</div>
+      <div class="list" style="margin-top:8px">
+        <div class="list-item"><div><div class="list-title">Detected → Reviewed</div><div class="list-meta">Human confirms context and impact</div></div><span class="badge">Review</span></div>
+        <div class="list-item"><div><div class="list-title">Planned → In Progress</div><div class="list-meta">Remediation task is created and assigned</div></div><span class="badge info">Task</span></div>
+        <div class="list-item"><div><div class="list-title">Fixed → Validation</div><div class="list-meta">Fresh crawl/evidence decides Closed or Reopened</div></div><span class="badge success">Evidence</span></div>
+      </div>
+    </article>
+  </section>
+</RawLayout>
