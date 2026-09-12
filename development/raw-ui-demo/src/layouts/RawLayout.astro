@@ -1,0 +1,36 @@
+---
+import DemoNav from '../components/DemoNav.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  trace?: string;
+}
+
+const { title, trace = 'Trace BA / DA / UIUX IDs here' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>{title} — Raw UI Sandbox</title>
+  </head>
+  <body>
+    <div class="raw-shell">
+      <aside class="raw-sidebar"><DemoNav /></aside>
+      <main class="raw-main raw-stack">
+        <header>
+          <div class="raw-kicker">Visual validation only</div>
+          <h1 class="raw-title">{title}</h1>
+          <p class="raw-muted">{trace}</p>
+        </header>
+        <div class="raw-note">
+          This sandbox checks hierarchy, density, states and flow. It is not production UI and must not invent product semantics.
+        </div>
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
